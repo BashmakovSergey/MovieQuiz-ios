@@ -105,7 +105,7 @@ final class MovieQuizViewController: UIViewController {
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect{
             correctAnswers += 1
-            
+            //здесь присутвует защита от прокликивания
             self.yesButton.isEnabled = false
             self.noButton.isEnabled = false
             
