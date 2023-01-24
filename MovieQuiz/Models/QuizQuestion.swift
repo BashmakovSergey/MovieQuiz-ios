@@ -6,7 +6,7 @@
 //
 
 import Foundation
-//убрали приватность у стуктуры, потому что не запускалось окно и нет подсказок из урока
+
 struct QuizQuestion{
     let image: String
     let text: String
