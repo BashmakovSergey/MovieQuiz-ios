@@ -3,7 +3,6 @@
 //  MovieQuiz
 //
 //  Created by Башмаков Сергей on 12.01.2023.
-//
 
 import Foundation
 
