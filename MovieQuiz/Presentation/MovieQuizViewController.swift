@@ -1,14 +1,12 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController {
-    // MARK: - Lifecycle
     
     @IBOutlet weak private var textLabel: UILabel!
     @IBOutlet weak private var counterLabel: UILabel!
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var noButton: UIButton!
     @IBOutlet weak private var yesButton: UIButton!
-    
     
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
@@ -18,11 +16,13 @@ final class MovieQuizViewController: UIViewController {
         let text: String
         let correctAnswer: Bool
     }
+    
     private struct QuizStepViewModel{
         let image: UIImage
         let question: String
         let questionNumber: String
     }
+    
     private struct QuizResultsViewModel{
         let title: String
         let text: String
@@ -70,19 +70,12 @@ final class MovieQuizViewController: UIViewController {
             image: "Vivarium",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: false),
-
     ]
     
-    
-    
-    
-    
-    
-    
     override func viewDidLoad() {
+        super.viewDidLoad()
         let currentQuestion = questions[currentQuestionIndex]
         imageView.layer.cornerRadius = 20
-        super.viewDidLoad()
         show(quiz: convert(model: currentQuestion))
     }
     
@@ -99,7 +92,6 @@ final class MovieQuizViewController: UIViewController {
         imageView.image = step.image
         self.yesButton.isEnabled = true
         self.noButton.isEnabled = true
-        
     }
     
     private func showAnswerResult(isCorrect: Bool) {
@@ -108,28 +100,24 @@ final class MovieQuizViewController: UIViewController {
             //здесь присутвует защита от прокликивания
             self.yesButton.isEnabled = false
             self.noButton.isEnabled = false
-            
             imageView.layer.masksToBounds = true
             imageView.layer.borderWidth = 8
             imageView.layer.cornerRadius = 20
             imageView.layer.borderColor = isCorrect ? UIColor(named: "YPGreen")?.cgColor : UIColor(named: "YPGreen")?.cgColor
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    self.showNextQuestionOrResults()
-                }
+                self.showNextQuestionOrResults()
+            }
         }else{
             self.yesButton.isEnabled = false
             self.noButton.isEnabled = false
-            
             imageView.layer.masksToBounds = true
             imageView.layer.borderWidth = 8
             imageView.layer.cornerRadius = 20
             imageView.layer.borderColor = isCorrect ? UIColor(named: "YPRed")?.cgColor : UIColor(named: "YPRed")?.cgColor
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    self.showNextQuestionOrResults()
-                }
+                self.showNextQuestionOrResults()
+            }
         }
-        
-        
     }
     
     private func showNextQuestionOrResults() {
@@ -155,27 +143,18 @@ final class MovieQuizViewController: UIViewController {
             title: result.title,
             message: result.text,
             preferredStyle: .alert)
-        
         let action = UIAlertAction(title: result.buttonText, style: .default) {_ in
             self.currentQuestionIndex = 0
-            
             // скидываем счётчик правильных ответов
             self.correctAnswers = 0
-            
             // заново показываем первый вопрос
             let firstQuestion = self.questions[self.currentQuestionIndex]
             let viewModel = self.convert(model: firstQuestion)
             self.show(quiz: viewModel)
         }
-        
         alert.addAction(action)
-        
         self.present(alert, animated: true, completion: nil)
-        
-        
     }
-    
-    
     
     @IBAction func noButtonClicked(_ sender: UIButton) {
         let currentQuestion = questions[currentQuestionIndex]
@@ -183,18 +162,14 @@ final class MovieQuizViewController: UIViewController {
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
     
-    
-    
     @IBAction func yesButtonClicked(_ sender: UIButton) {
         let currentQuestion = questions[currentQuestionIndex]
         let givenAnswer = true
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
     
+}
     
-    }
-    
-
 /*
  Mock-данные
  
